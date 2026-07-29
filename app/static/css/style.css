@@ -1,0 +1,438 @@
+/* ==========================
+   CSS VARIABLES
+========================== */
+
+:root{
+
+    --background:#FAF7F2;
+    --surface:#FFFDF9;
+
+    --primary:#E8C76A;
+    --primary-hover:#DDBA54;
+
+    --text:#4D4036;
+    --text-light:#7C6E63;
+
+    --border:#E8E0D6;
+
+    --shadow:0 12px 30px rgba(0,0,0,.08);
+
+    --radius:18px;
+
+    --transition:.3s ease;
+
+}
+
+
+/* ==========================
+   GENERAL
+========================== */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:"Inter",sans-serif;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+}
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+
+/* ==========================
+   NAVBAR
+========================== */
+
+.navbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px 8%;
+
+    background:rgba(255,253,249,.82);
+
+    backdrop-filter:blur(12px);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.logo{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    transition:var(--transition);
+
+}
+
+.logo:hover{
+
+    color:var(--primary-hover);
+
+}
+
+.menu{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:35px;
+
+}
+
+.menu a{
+
+    color:var(--text);
+
+    font-weight:500;
+
+    transition:var(--transition);
+
+}
+
+.menu a:hover{
+
+    color:var(--primary-hover);
+
+}
+
+
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:60px;
+
+    padding:90px 8%;
+
+    min-height:85vh;
+
+}
+
+.hero-text{
+
+    flex:1;
+
+}
+
+.hero-text h1{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:72px;
+
+    line-height:1.1;
+
+    margin-bottom:25px;
+
+}
+
+.hero-text p{
+
+    max-width:550px;
+
+    font-size:19px;
+
+    line-height:1.8;
+
+    color:var(--text-light);
+
+}
+
+
+/* ==========================
+   BUTTONS
+========================== */
+
+.buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    margin-top:40px;
+
+}
+
+.primary,
+.secondary{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:15px 30px;
+
+    border-radius:var(--radius);
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.primary{
+
+    background:var(--primary);
+
+    color:white;
+
+    box-shadow:var(--shadow);
+
+}
+
+.primary:hover{
+
+    background:var(--primary-hover);
+
+    transform:translateY(-4px);
+
+}
+
+.secondary{
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+}
+
+.secondary:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/* ==========================
+   HERO IMAGE
+========================== */
+
+.hero-image{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    overflow:hidden;
+
+}
+
+.hero-image img{
+
+    width:520px;
+
+    max-width:none;
+
+    margin-right:-120px;
+
+    animation:float 7s ease-in-out infinite;
+
+}
+
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-14px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width:900px){
+
+    .hero{
+
+        flex-direction:column;
+
+        text-align:center;
+
+        padding:70px 8%;
+
+    }
+
+    .hero-text p{
+
+        margin:auto;
+
+    }
+
+    .buttons{
+
+        justify-content:center;
+
+        flex-wrap:wrap;
+
+    }
+
+    .hero-image{
+
+        justify-content:center;
+
+        margin-top:40px;
+
+    }
+
+    .hero-image img{
+
+        width:320px;
+
+        margin-right:0;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .navbar{
+
+        flex-direction:column;
+
+        gap:18px;
+
+        padding:18px 8%;
+
+    }
+
+    .menu{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:20px;
+
+    }
+
+    .hero h1{
+
+        font-size:52px;
+
+    }
+
+    .hero p{
+
+        font-size:17px;
+
+    }
+
+}
+
+@media (max-width:480px){
+
+    .hero{
+
+        padding:50px 7%;
+
+    }
+
+    .hero h1{
+
+        font-size:40px;
+
+    }
+
+    .buttons{
+
+        flex-direction:column;
+
+    }
+
+    .primary,
+    .secondary{
+
+        width:100%;
+
+    }
+
+    .hero-image img{
+
+        width:250px;
+
+    }
+
+}

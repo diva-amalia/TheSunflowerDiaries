@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Sunflower Diaries</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- ==========================
+         NAVIGATION
+    =========================== -->
+
+    <nav class="navbar">
+
+        <a href="/" class="logo">
+
+            The Sunflower Diaries
+
+        </a>
+
+        <div class="menu">
+
+            <a href="/">Home</a>
+
+            <a href="#">Explore</a>
+
+            <a href="#">Login</a>
+
+        </div>
+
+    </nav>
+
+    <!-- ==========================
+         HERO
+    =========================== -->
+
+    <header class="hero">
+
+        <section class="hero-text">
+
+            <h1>
+
+                A quiet garden <br>
+                for blooming thoughts.
+
+            </h1>
+
+            <p>
+
+                Preserve your poems, notes, and reflections
+                in a peaceful place where every thought has
+                a chance to bloom.
+
+            </p>
+
+            <div class="buttons">
+
+                <a href="#" class="primary">
+
+                    Plant a Poem
+
+                </a>
+
+                <a href="#" class="secondary">
+
+                    Plant a Note
+
+                </a>
+
+            </div>
+
+        </section>
+
+        <section class="hero-image">
+
+            <img src="{{ url_for('static', filename='img/sunflowers.jfif') }}"
+                 alt="Vintage sunflower illustration">
+
+        </section>
+
+    </header>
+
+</body>
+
+</html>

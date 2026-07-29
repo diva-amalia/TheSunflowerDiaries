@@ -1,11 +1,19 @@
 from flask import Flask
 
+from app.auth.routes import auth
+from app.main.routes import main
+from app.note.routes import note
+from app.poem.routes import poem
+from app.profile.routes import profile
+
 
 def create_app():
     app = Flask(__name__)
 
-    @app.route("/")
-    def home():
-        return "<h1>🌻 Welcome to The Sunflower Diaries</h1>"
+    app.register_blueprint(main)
+    app.register_blueprint(auth)
+    app.register_blueprint(note)
+    app.register_blueprint(poem)
+    app.register_blueprint(profile)
 
     return app
