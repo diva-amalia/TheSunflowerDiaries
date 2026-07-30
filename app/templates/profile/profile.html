@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Profile • The Sunflower Diaries</title>
+
+</head>
+
+<body>
+
+    <h1>
+        Welcome back, {{ user.display_name }} 🌻
+    </h1>
+
+    <p>
+        You are successfully signed in.
+    </p>
+
+    <p>
+
+        Username :
+        {{ user.username }}
+
+    </p>
+
+    <p>
+
+        Email :
+        {{ user.email }}
+
+    </p>
+
+    <a href="{{ url_for('auth.logout') }}">
+        Sign Out
+    </a>
+
+</body>
+
+</html>

@@ -1,0 +1,295 @@
+/* ==========================
+   CSS VARIABLES
+========================== */
+
+:root {
+
+    --background: #FAF7F2;
+    --surface: #FFFDF9;
+
+    --primary: #E8C76A;
+    --primary-hover: #DDBA54;
+
+    --text: #4D4036;
+    --text-light: #7C6E63;
+
+    --border: #E8E0D6;
+
+    --radius: 18px;
+
+    --shadow: 0 15px 35px rgba(0, 0, 0, .08);
+
+    --transition: .3s ease;
+
+}
+
+/* ==========================
+   GENERAL
+========================== */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+
+    background: var(--background);
+
+    font-family: "Inter", sans-serif;
+
+    color: var(--text);
+
+}
+
+/* ==========================
+   AUTH CONTAINER
+========================== */
+
+.auth-container {
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.card {
+
+    width: 100%;
+    max-width: 480px;
+
+    background: var(--surface);
+
+    padding: 45px;
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+}
+
+/* ==========================
+   LOGO
+========================== */
+
+.logo {
+
+    font-size: 52px;
+
+    text-align: center;
+
+    margin-bottom: 12px;
+
+}
+
+/* ==========================
+   TITLES
+========================== */
+
+.card h1 {
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 42px;
+
+    text-align: center;
+
+    margin-bottom: 10px;
+
+}
+
+.card h2 {
+
+    text-align: center;
+
+    font-size: 24px;
+
+    margin-bottom: 12px;
+
+}
+
+.card p {
+
+    text-align: center;
+
+    color: var(--text-light);
+
+    line-height: 1.7;
+
+    margin-bottom: 30px;
+
+}
+
+/* ==========================
+   FORM
+========================== */
+
+form {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+label {
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
+
+}
+
+input {
+
+    margin-bottom: 20px;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    transition: var(--transition);
+
+}
+
+input:focus {
+
+    outline: none;
+
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px rgba(232, 199, 106, .25);
+
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+button {
+
+    margin-top: 10px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+}
+
+button:hover {
+
+    background: var(--primary-hover);
+
+    transform: translateY(-2px);
+
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+.footer {
+
+    margin-top: 28px;
+
+    text-align: center;
+
+}
+
+.footer p {
+
+    margin: 0;
+
+}
+
+.footer a {
+
+    text-decoration: none;
+
+    color: var(--primary-hover);
+
+    font-weight: 600;
+
+    transition: var(--transition);
+
+}
+
+.footer a:hover {
+
+    text-decoration: underline;
+
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 768px) {
+
+    body {
+
+        padding: 20px;
+
+    }
+
+    .card {
+
+        padding: 32px 24px;
+
+    }
+
+    .logo {
+
+        font-size: 44px;
+
+    }
+
+    .card h1 {
+
+        font-size: 34px;
+
+    }
+
+    .card h2 {
+
+        font-size: 22px;
+
+    }
+
+}

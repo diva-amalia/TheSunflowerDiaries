@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register • The Sunflower Diaries</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/auth.css') }}">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <div class="card">
+
+            <div class="logo">
+                🌻
+            </div>
+
+            <h1>The Sunflower Diaries</h1>
+
+            <h2>Create your account</h2>
+
+            <p>
+                Start your journey by creating a peaceful place to preserve your poems, notes, and reflections.
+            </p>
+
+            
+        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+{% endwith %}
+                <form method="POST"
+                  action="{{ url_for('auth.register') }}">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    id="username"
+                    type="text"
+                    name="username"
+                    placeholder="Choose a username"
+                    autocomplete="username"
+                    required>
+
+                <label for="display_name">
+                    Display Name
+                </label>
+
+                <input
+                    id="display_name"
+                    type="text"
+                    name="display_name"
+                    placeholder="How should we call you?"
+                    autocomplete="name"
+                    required>
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required>
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    required>
+
+                <label for="confirm_password">
+                    Confirm Password
+                </label>
+
+                <input
+                    id="confirm_password"
+                    type="password"
+                    name="confirm_password"
+                    placeholder="Confirm your password"
+                    autocomplete="new-password"
+                    required>
+
+                <button type="submit">
+                    Create Account
+                </button>
+
+            </form>
+
+            <div class="footer">
+
+                <p>
+
+                    Already have an account?
+
+                    <a href="{{ url_for('auth.login') }}">
+                        Sign In
+                    </a>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
