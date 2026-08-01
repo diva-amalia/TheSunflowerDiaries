@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        {{ profile_user.display_name }}
+        • The Sunflower Diaries
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+                           filename='css/poem.css') }}">
+
+</head>
+
+<body>
+
+<main class="container">
+
+<div class="card">
+
+<a href="{{ url_for('explore.home') }}"
+class="back-link">
+
+← Back to Explore
+
+</a>
+
+<h1>
+
+{{ profile_user.display_name }}
+
+</h1>
+
+<p>
+
+@
+
+{{ profile_user.username }}
+
+</p>
+
+<p>
+
+{{ profile_user.bio or
+"A quiet gardener 🌱" }}
+
+</p>
+
+<hr>
+
+<h2>
+
+Garden Statistics
+
+</h2>
+
+<p>
+
+🌻 Poems
+
+{{ public_poems|length }}
+
+</p>
+
+<p>
+
+📝 Notes
+
+{{ public_notes|length }}
+
+</p>
+
+<hr>
+
+<h2>
+
+Recent Blooms
+
+</h2>
+
+{% for poem in public_poems %}
+
+<p>
+
+🌻
+
+<a href="{{ url_for('poem.view_poem',
+poem_id=poem.id) }}">
+
+{{ poem.title }}
+
+</a>
+
+</p>
+
+{% endfor %}
+
+{% for note in public_notes %}
+
+<p>
+
+📝
+
+<a href="{{ url_for('note.view_note',
+note_id=note.id) }}">
+
+{{ note.title }}
+
+</a>
+
+</p>
+
+{% endfor %}
+
+</div>
+
+</main>
+
+</body>
+
+</html>

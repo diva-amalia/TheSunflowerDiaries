@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ user.display_name }} • The Sunflower Diaries</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/poem.css') }}">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<main class="container">
+
+<div class="card poems-overview">
+
+<a href="{{ url_for('explore.home') }}"
+class="back-link">
+
+← Back to Explore
+
+</a>
+
+<h1>
+
+{{ user.display_name }}
+
+</h1>
+
+<p class="intro">
+
+@{{ user.username }}
+
+</p>
+
+<div class="poem-card">
+
+<p class="poem-preview">
+
+{{ user.bio if user.bio else "Blooming quietly 🌻" }}
+
+</p>
+
+<div class="poem-actions"
+style="justify-content:flex-start;">
+
+<span class="badge public">
+
+Joined {{ user.created_at.strftime("%B %Y") }}
+
+</span>
+
+</div>
+
+</div>
+
+<div class="poem-list"
+style="margin-top:28px;">
+
+<div class="poem-card">
+
+<div class="poem-card-header">
+
+<h2>
+
+Garden Snapshot
+
+</h2>
+
+</div>
+
+<div class="poem-preview">
+
+<p>
+
+🌻 Poems :
+<strong>
+
+{{ stats.public_poems }}
+
+</strong>
+
+</p>
+
+<p>
+
+📝 Notes :
+<strong>
+
+{{ stats.public_notes }}
+
+</strong>
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="poem-list"
+style="margin-top:28px;">
+
+<div class="poem-card">
+
+<div class="poem-card-header">
+
+<h2>
+
+Recent Blooms
+
+</h2>
+
+</div>
+
+</div>
+
+{% if blooms %}
+
+{% for bloom in blooms %}
+
+<article class="poem-card">
+
+<div class="community-header">
+
+<a href="{{ url_for(
+'profile.public_profile',
+username=user.username) }}"
+class="community-username">
+
+@{{ user.username }}
+
+</a>
+
+<time
+class="community-date"
+datetime="{{ bloom.created_at.isoformat() }}">
+
+{{ bloom.created_at.strftime("%B %d, %Y") }}
+
+</time>
+
+</div>
+
+{% if bloom.__class__.__name__ == "Poem" %}
+
+<span class="content-type">
+
+🌻 Poem
+
+</span>
+
+{% else %}
+
+<span class="content-type">
+
+📝 Note
+
+</span>
+
+{% endif %}
+
+<h2 class="community-title">
+
+{{ bloom.title }}
+
+</h2>
+
+<p class="community-author">
+
+by {{ user.display_name }}
+
+</p>
+
+<div class="community-divider"></div>
+
+<p class="poem-preview">
+
+{{ bloom.content[:180] }}
+
+{% if bloom.content|length > 180 %}
+…
+{% endif %}
+
+</p>
+
+<div class="community-divider"></div>
+
+<div class="community-footer">
+
+<span class="community-blooms">
+
+🌻 Blooms
+
+<span class="coming-soon">
+
+(Coming Soon)
+
+</span>
+
+</span>
+
+{% if bloom.__class__.__name__ == "Poem" %}
+
+<a href="{{ url_for(
+'poem.view_poem',
+poem_id=bloom.id) }}"
+class="button">
+
+Read →
+
+</a>
+
+{% else %}
+
+<a href="{{ url_for(
+'note.view_note',
+note_id=bloom.id) }}"
+class="button">
+
+Read →
+
+</a>
+
+{% endif %}
+
+</div>
+
+</article>
+
+{% endfor %}
+
+{% else %}
+
+<p class="empty-state">
+
+Nothing has bloomed yet.
+
+</p>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</main>
+
+</body>
+
+</html>
+

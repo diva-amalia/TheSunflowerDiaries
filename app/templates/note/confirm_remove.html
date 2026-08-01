@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Note • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/poem.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+    <main class="container">
+        <div class="card poem-confirm">
+            <a href="{{ url_for('note.view_note', note_id=note.id) }}" class="back-link">← Back to Note</a>
+            <h1>🗑 Delete Note</h1>
+            <p class="intro">This note will be removed from your garden. The words will be gone from your personal collection.</p>
+            <div class="confirm-details">
+                <h2>{{ note.title }}</h2>
+                <p>{{ note.content[:200] }}{% if note.content|length > 200 %}…{% endif %}</p>
+            </div>
+            <form method="POST">
+                <div class="buttons">
+                    <a href="{{ url_for('note.view_note', note_id=note.id) }}" class="cancel">Cancel</a>
+                    <button type="submit">🗑 Delete Note</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

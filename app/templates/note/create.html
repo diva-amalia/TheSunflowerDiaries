@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Plant a Note • The Sunflower Diaries</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/poem.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap"
+      rel="stylesheet">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="card">
+
+            <a href="{{ back_url }}"
+               class="back-link">
+                ← Back
+            </a>
+
+            <h1>{{ page_title }}</h1>
+
+            <blockquote>
+
+                A quiet thought<br>
+                can rest beside the garden.
+
+            </blockquote>
+
+            <div class="intro">
+
+    Every note you keep here
+    belongs to your own gentle space.
+
+</div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ action_url }}">
+                <label for="title">
+                    <br></br>
+                    Title
+
+                </label>
+
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    placeholder="Untitled"
+                    value="{{ note.title if note else '' }}"
+                    required>
+                <label for="content">
+
+                    Your Note
+
+                </label>
+
+                <textarea
+                    id="content"
+                    name="content"
+                    placeholder="Write a little thought for your garden..."
+                    required>{{ note.content if note else '' }}</textarea>
+
+                <div class="visibility-group">
+                    <p class="section-label">Visibility</p>
+                    <div class="visibility-options">
+                        <label class="visibility-card">
+                            <input
+                                type="radio"
+                                name="visibility"
+                                value="private"
+                                {% if note is none or not note.is_public %}checked{% endif %}>
+                            <div class="visibility-card-inner">
+                                <span class="visibility-emoji">🔒</span>
+                                <div>
+                                    <span class="visibility-title">Keep this note private</span>
+                                    <span class="visibility-description">Private</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="visibility-card">
+                            <input
+                                type="radio"
+                                name="visibility"
+                                value="public"
+                                {% if note and note.is_public %}checked{% endif %}>
+                            <div class="visibility-card-inner">
+                                <span class="visibility-emoji">🌍</span>
+                                <div>
+                                    <span class="visibility-title">Share this note publicly</span>
+                                    <span class="visibility-description">Public</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                    <div class="editor-footer">
+
+        <span id="word-count">
+
+         0 words
+
+        </span>
+
+        </div>
+
+                <div class="buttons">
+
+                    <a href="{{ back_url }}"
+                       class="cancel">
+
+                        Cancel
+
+                    </a>
+
+                    <button type="submit">
+                        {{ submit_label }}
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <script>
+
+const textarea =
+document.getElementById("content");
+
+const counter =
+document.getElementById("word-count");
+
+counter.textContent = `${textarea.value.trim().split(/\s+/).filter(Boolean).length} words`;
+
+textarea.addEventListener("input",()=>{
+
+    const words =
+    textarea.value
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    counter.textContent =
+        `${words.length} words`;
+
+});
+
+</script>
+</body>
+
+</html>

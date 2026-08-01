@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ poem.title }} • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/poem.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+    <main class="container">
+        <div class="card poem-detail">
+            <a href="{{ back_url }}" class="back-link">← Back</a>
+            <h1>{{ poem.title }}</h1>
+            <p class="poem-badge badge {{ 'public' if poem.is_public else 'private' }}">
+                {{ '🌍 Public' if poem.is_public else '🔒 Private' }}
+            </p>
+            <p class="poem-date">{{ poem.created_at.strftime('%B %d, %Y') }}</p>
+            <div class="poem-content">
+                {{ poem.content | replace('\n', '<br>') | safe }}
+            </div>
+            <div class="poem-detail-actions">
+
+            <a href="{{ back_url }}" class="button secondary">
+                ← Back
+            </a>
+
+    {% if current_user.id == poem.user_id %}
+
+        <a href="{{ url_for('poem.edit_poem', poem_id=poem.id) }}"
+           class="button">
+            Edit
+        </a>
+
+        <a href="{{ url_for('poem.remove_poem', poem_id=poem.id) }}"
+           class="button secondary">
+            🍂 Remove from Garden
+        </a>
+
+    {% endif %}
+
+</div>
+        </div>
+    </main>
+</body>
+
+</html>

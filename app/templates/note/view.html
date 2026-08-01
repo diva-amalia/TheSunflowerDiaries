@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ note.title }} • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/poem.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+    <main class="container">
+        <div class="card poem-detail">
+            <a href="{{ back_url }}" class="back-link">← Back</a>
+            <h1>{{ note.title }}</h1>
+            <p class="poem-badge badge {{ 'public' if note.is_public else 'private' }}">
+                {{ '🌍 Public' if note.is_public else '🔒 Private' }}
+            </p>
+            <p class="poem-date">{{ note.created_at.strftime('%B %d, %Y') }}</p>
+            <div class="poem-content">
+                {{ note.content | replace('\n', '<br>') | safe }}
+            </div>
+            <div class="poem-detail-actions">
+                {% if note.user_id == current_user.id %}
+                <a href="{{ url_for('note.edit_note', note_id=note.id) }}" class="button">Edit</a>
+                <a href="{{ url_for('note.delete_note', note_id=note.id) }}" class="button secondary">🗑 Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

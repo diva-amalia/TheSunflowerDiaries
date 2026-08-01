@@ -33,7 +33,7 @@ auth = Blueprint(
 def login():
 
     if current_user.is_authenticated:
-        return redirect(url_for("profile.index"))
+        return redirect(url_for("main.welcome"))
 
     if request.method == "GET":
         return render_template("auth/login.html")
@@ -73,7 +73,7 @@ def login():
     )
 
     return redirect(
-        url_for("profile.index")
+    url_for("main.welcome")
     )
 
 # ==========================
@@ -168,11 +168,6 @@ def logout():
 
     logout_user()
 
-    flash(
-        "You have been signed out.",
-        "info",
-    )
-
     return redirect(
-        url_for("auth.login")
+        url_for("main.home")
     )

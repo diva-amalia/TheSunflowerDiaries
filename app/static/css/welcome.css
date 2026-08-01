@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    color: #3f3a2d;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-bg {
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(120deg, rgba(255, 247, 228, 0.4), rgba(255, 245, 214, 0.2)),
+        url("{{ url_for('static', filename='img/andbees.jfif') }}") center/cover no-repeat;
+    filter: saturate(1.1) contrast(1.05);
+    z-index: 0;
+}
+
+.overlay {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 20px;
+}
+
+.glass-card {
+    width: min(100%, 560px);
+    padding: 42px 36px;
+    border-radius: 28px;
+    background: rgba(255, 252, 245, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 24px 60px rgba(57, 42, 20, 0.2);
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.sunflower {
+    font-size: 3.3rem;
+    margin-bottom: 10px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    font-size: 0.74rem;
+    color: #9b7031;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 3rem;
+    color: #3f4b2b;
+    margin-bottom: 12px;
+}
+
+.welcome {
+    font-size: 1rem;
+    color: #7a6848;
+    margin-bottom: 6px;
+}
+
+h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.7rem;
+    color: #5d4a28;
+    margin-bottom: 18px;
+}
+
+.verse {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #644f34;
+    margin: 18px 0 20px;
+}
+
+.divider {
+    color: #9a7540;
+    margin: 8px 0 20px;
+    letter-spacing: 0.2em;
+}
+
+.enter-button {
+    display: inline-block;
+    text-decoration: none;
+    padding: 13px 22px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #bc8f2f 0%, #e1b96c 100%);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 10px 24px rgba(158, 112, 29, 0.22);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.enter-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(158, 112, 29, 0.28);
+}
+
+.fade {
+    animation: fadeIn 0.7s ease both;
+}
+
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.12s; }
+.delay-3 { animation-delay: 0.19s; }
+.delay-4 { animation-delay: 0.26s; }
+.delay-5 { animation-delay: 0.33s; }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .glass-card {
+        padding: 32px 24px;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+    }
+}

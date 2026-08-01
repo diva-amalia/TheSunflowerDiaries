@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Poem • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/poem.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+    <main class="container">
+        <div class="card poem-confirm">
+            <a href="{{ url_for('poem.view_poem', poem_id=poem.id) }}" class="back-link">← Back to Poem</a>
+            <h1>🍂 Remove from Garden</h1>
+            <p class="intro">This poem will be removed from your garden. The words will be gone from your personal collection.</p>
+            <div class="confirm-details">
+                <h2>{{ poem.title }}</h2>
+                <p>{{ poem.content[:200] }}{% if poem.content|length > 200 %}…{% endif %}</p>
+            </div>
+            <form method="POST">
+                <div class="buttons">
+                    <a href="{{ url_for('poem.view_poem', poem_id=poem.id) }}" class="cancel">Cancel</a>
+                    <button type="submit">🍂 Remove from Garden</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

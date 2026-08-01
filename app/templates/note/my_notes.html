@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notes • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/poem.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+    <main class="container">
+        <div class="card poems-overview">
+            <a href="{{ url_for('garden.home') }}" class="back-link">← Back to Garden</a>
+            <h1>📝 My Notes</h1>
+            <p class="intro">A quiet place for everything you've kept.</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            {% if notes %}
+                <div class="poem-list">
+                    {% for note in notes %}
+                        <article class="poem-card">
+                            <div class="poem-card-header">
+                                <div class="poem-title-block">
+                                    <h2>{{ note.title }}</h2>
+                                    <span class="badge {{ 'public' if note.is_public else 'private' }}">
+                                        {{ '🌍 Public' if note.is_public else '🔒 Private' }}
+                                    </span>
+                                </div>
+                                <time datetime="{{ note.created_at.isoformat() }}">{{ note.created_at.strftime('%B %d, %Y') }}</time>
+                            </div>
+                            <p class="poem-preview">{{ note.content[:180] }}{% if note.content|length > 180 %}…{% endif %}</p>
+                            <div class="poem-actions">
+                                <a href="{{ url_for('note.view_note', note_id=note.id) }}" class="button secondary">View</a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-state">You haven't kept any notes yet. Start with a new thought.</p>
+                <a href="{{ url_for('note.create_note') }}" class="button">Plant a Note</a>
+            {% endif %}
+        </div>
+    </main>
+</body>
+
+</html>

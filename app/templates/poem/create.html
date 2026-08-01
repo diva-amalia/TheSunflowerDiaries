@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Plant a Poem • The Sunflower Diaries</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/poem.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap"
+      rel="stylesheet">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+    <main class="container">
+
+        <div class="card">
+
+            <a href="{{ back_url }}"
+               class="back-link">
+                ← Back
+            </a>
+
+            <h1>{{ page_title }}</h1>
+
+            <blockquote>
+
+                Some flowers bloom<br>
+                without asking<br>
+                to be seen.
+
+            </blockquote>
+
+            <div class="intro">
+
+    Every word planted here
+    belongs only to you.
+    
+
+</div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ action_url }}">
+                <label for="title">
+                    <br></br>
+                    Title
+
+                </label>
+
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    placeholder="Untitled"
+                    value="{{ poem.title if poem else '' }}"
+                    required>
+                <label for="content">
+
+                    Your Poem
+
+                </label>
+
+                <textarea
+                    id="content"
+                    name="content"
+                    placeholder="Begin whenever your heart is ready..."
+                    required>{{ poem.content if poem else '' }}</textarea>
+
+                <div class="visibility-group">
+                    <p class="section-label">Visibility</p>
+                    <div class="visibility-options">
+                        <label class="visibility-card">
+                            <input
+                                type="radio"
+                                name="visibility"
+                                value="private"
+                                {% if poem is none or not poem.is_public %}checked{% endif %}>
+                            <div class="visibility-card-inner">
+                                <span class="visibility-emoji">🔒</span>
+                                <div>
+                                    <span class="visibility-title">Keep this flower in my garden</span>
+                                    <span class="visibility-description">Private</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="visibility-card">
+                            <input
+                                type="radio"
+                                name="visibility"
+                                value="public"
+                                {% if poem and poem.is_public %}checked{% endif %}>
+                            <div class="visibility-card-inner">
+                                <span class="visibility-emoji">🌍</span>
+                                <div>
+                                    <span class="visibility-title">Let this flower bloom for everyone</span>
+                                    <span class="visibility-description">Public</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                    <div class="editor-footer">
+
+        <span id="word-count">
+
+         0 words
+
+        </span>
+
+        </div>
+
+                <div class="buttons">
+
+                    <a href="{{ back_url }}"
+                       class="cancel">
+
+                        Cancel
+
+                    </a>
+
+                    <button type="submit">
+                        {{ submit_label }}
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <script>
+
+const textarea =
+document.getElementById("content");
+
+const counter =
+document.getElementById("word-count");
+
+counter.textContent = `${textarea.value.trim().split(/\s+/).filter(Boolean).length} words`;
+
+textarea.addEventListener("input",()=>{
+
+    const words =
+    textarea.value
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    counter.textContent =
+        `${words.length} words`;
+
+});
+
+</script>
+</body>
+
+</html>

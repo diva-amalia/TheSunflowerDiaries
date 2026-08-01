@@ -1,0 +1,145 @@
+/* ==========================
+   RESET
+========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(255, 242, 202, 0.7), transparent 35%),
+        linear-gradient(135deg, #f7efe1 0%, #f0dfc0 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 20px;
+}
+
+.page-shell {
+    width: 100%;
+    max-width: 960px;
+}
+
+.garden-card {
+    background: rgba(255, 252, 245, 0.94);
+    border: 1px solid rgba(196, 165, 92, 0.25);
+    border-radius: 28px;
+    padding: 48px 36px;
+    box-shadow: 0 20px 45px rgba(66, 45, 15, 0.12);
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.flower {
+    font-size: 3.2rem;
+    margin-bottom: 12px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    font-size: 0.75rem;
+    color: #a07a3c;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 3rem;
+    color: #3f4b2b;
+    margin-bottom: 12px;
+}
+
+.quote {
+    color: #6f5b3d;
+    font-style: italic;
+    line-height: 1.8;
+    max-width: 460px;
+    margin: 0 auto 34px;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 18px;
+}
+
+.action-card {
+    text-decoration: none;
+    background: linear-gradient(145deg, #fffdf7 0%, #f7eed9 100%);
+    border: 1px solid #e8dcc2;
+    border-radius: 20px;
+    padding: 24px 18px;
+    color: #3f4b2b;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    border-color: #c79b31;
+    box-shadow: 0 12px 24px rgba(84, 53, 18, 0.12);
+}
+
+.icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+}
+
+.action-card h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+.action-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #6f5b3d;
+}
+
+.logout {
+    display: inline-block;
+    margin-top: 36px;
+    text-decoration: none;
+    color: #876339;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.logout:hover {
+    color: #b57b20;
+}
+
+.flash-messages {
+    margin: 24px 0 0;
+    text-align: left;
+}
+
+.flash {
+    padding: 16px 18px;
+    border-radius: 18px;
+    margin-bottom: 14px;
+    background: rgba(255, 246, 213, 0.9);
+    border: 1px solid rgba(216, 181, 71, 0.25);
+    color: #4f462f;
+}
+
+@media (max-width: 768px) {
+    .garden-card {
+        padding: 34px 24px;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+    }
+
+    .actions {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Poems • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/poem.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+    <main class="container">
+        <div class="card poems-overview">
+            <a href="{{ url_for('garden.home') }}" class="back-link">← Back to Garden</a>
+            <h1>📖 My Poems</h1>
+            <p class="intro">A quiet place for everything you've planted.</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            {% if poems %}
+                <div class="poem-list">
+                    {% for poem in poems %}
+                        <article class="poem-card">
+                            <div class="poem-card-header">
+                                <div class="poem-title-block">
+                                    <h2>{{ poem.title }}</h2>
+                                    <span class="badge {{ 'public' if poem.is_public else 'private' }}">
+                                        {{ '🌍 Public' if poem.is_public else '🔒 Private' }}
+                                    </span>
+                                </div>
+                                <time datetime="{{ poem.created_at.isoformat() }}">{{ poem.created_at.strftime('%B %d, %Y') }}</time>
+                            </div>
+                            <p class="poem-preview">{{ poem.content[:180] }}{% if poem.content|length > 180 %}…{% endif %}</p>
+                            <div class="poem-actions">
+                                <a href="{{ url_for('poem.view_poem', poem_id=poem.id) }}" class="button secondary">Read</a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-state">You haven't planted any poems yet. Start with a new verse.</p>
+                <a href="{{ url_for('poem.create_poem') }}" class="button">Plant a Poem</a>
+            {% endif %}
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/welcome.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+    <div class="page-bg"></div>
+    <div class="overlay">
+        <main class="glass-card">
+            <div class="sunflower">🌻</div>
+            <p class="eyebrow">A gentle place for your thoughts</p>
+            <h1 class="fade delay-1">The Sunflower Diaries</h1>
+            <p class="welcome fade delay-2">Welcome back,</p>
+            <h2 class="fade delay-3">{{ current_user.display_name }}</h2>
+
+            <div class="verse fade delay-4">
+                {% for line in verse %}
+                    {% if line %}
+                        <p>{{ line }}</p>
+                    {% else %}
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="divider fade delay-5">───────── ✿ ─────────</div>
+            <a href="{{ url_for('garden.home') }}" class="enter-button">Enter the Garden →</a>
+        </main>
+    </div>
+</body>
+</html>

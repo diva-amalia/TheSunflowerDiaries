@@ -4,14 +4,17 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>The Sunflower Diaries</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
     <link rel="preconnect"
           href="https://fonts.gstatic.com"
@@ -42,7 +45,6 @@
 
             <a href="#">Explore</a>
 
-            <a href="{{ url_for('auth.login') }}">Login</a>
         </div>
 
     </nav>
@@ -72,15 +74,19 @@
 
             <div class="buttons">
 
-                <a href="#" class="primary">
+                <a
+                    href="{{ url_for('main.begin_journey') }}"
+                    class="primary">
 
-                    Plant a Poem
+                    🌻 Begin Your Journey
 
                 </a>
 
-                <a href="#" class="secondary">
+                <a
+                    href="{{ url_for('explore.home') }}"
+                    class="secondary">
 
-                    Plant a Note
+                    Explore the Garden →
 
                 </a>
 
@@ -90,8 +96,9 @@
 
         <section class="hero-image">
 
-            <img src="{{ url_for('static', filename='img/sunflowers.jfif') }}"
-                 alt="Vintage sunflower illustration">
+            <img
+                src="{{ url_for('static', filename='img/sunflowers.jfif') }}"
+                alt="Vintage sunflower illustration">
 
         </section>
 

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Explore • The Sunflower Diaries</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/poem.css') }}">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<main class="container">
+
+    <div class="card poems-overview">
+
+        <a href="{{ url_for('garden.home') }}"
+           class="back-link">
+
+            ← Back to Garden
+
+        </a>
+
+        <h1>
+
+            🌍 Explore the Garden
+
+        </h1>
+
+        <p class="intro">
+
+            Discover poems, notes, and the people who choose to bloom.
+
+        </p>
+
+        <!-- ==========================
+             SEARCH
+        =========================== -->
+
+        <div class="explore-search">
+
+            <input
+                type="search"
+                placeholder="🔎 Search poems, notes, or gardeners...">
+
+        </div>
+
+        <!-- ==========================
+             TABS
+        =========================== -->
+
+        <nav class="explore-tabs">
+
+            <a href="{{ url_for('explore.home', tab='bloomed') }}"
+               class="{% if active_tab == 'bloomed' %}active{% endif %}">
+
+                🌱 Bloomed
+
+            </a>
+
+            <a href="{{ url_for('explore.home', tab='poems') }}"
+               class="{% if active_tab == 'poems' %}active{% endif %}">
+
+                🌻 Poems
+
+            </a>
+
+            <a href="{{ url_for('explore.home', tab='notes') }}"
+               class="{% if active_tab == 'notes' %}active{% endif %}">
+
+                📝 Notes
+
+            </a>
+
+        </nav>
+
+        <!-- ==========================
+             FEED
+        =========================== -->
+
+        <section class="explore-feed">
+
+            {% if feed %}
+
+                {% for item in feed %}
+
+
+
+<article class="poem-card">
+
+    <!-- ==========================
+         USERNAME & DATE
+    =========================== -->
+
+    <div class="poem-card-header">
+
+        <div>
+
+            <a href="{{ url_for(
+                'profile.public_profile',
+                username=item.author.username
+            ) }}"
+            class="feed-username">
+
+                @{{ item.author.username }}
+
+            </a>
+
+        </div>
+
+        <time datetime="{{ item.created_at.isoformat() }}">
+
+            {{ item.created_at.strftime('%B %d, %Y') }}
+
+        </time>
+
+    </div>
+
+    <!-- ==========================
+         CONTENT TYPE
+    =========================== -->
+
+    <div class="content-type">
+
+        {% if item.__class__.__name__ == "Poem" %}
+
+            🌻 Poem
+
+        {% else %}
+
+            📝 Note
+
+        {% endif %}
+
+    </div>
+
+    <!-- ==========================
+         TITLE
+    =========================== -->
+
+    <h2>
+
+        {{ item.title }}
+
+    </h2>
+
+    <!-- ==========================
+         AUTHOR
+    =========================== -->
+
+    <p class="author">
+
+        by {{ item.author.display_name }}
+
+    </p>
+
+    <div class="community-divider"></div>
+
+    <!-- ==========================
+         PREVIEW
+    =========================== -->
+
+    <p class="poem-preview">
+
+        {{ item.content[:180] }}
+
+        {% if item.content|length > 180 %}
+            …
+        {% endif %}
+
+    </p>
+
+    <div class="community-divider"></div>
+
+    <!-- ==========================
+         FOOTER
+    =========================== -->
+
+<div class="community-footer">
+
+    {% if item.__class__.__name__ == "Poem" %}
+
+        <form
+            action="{{ url_for(
+                'cherish.cherish_poem',
+                poem_id=item.id
+            ) }}"
+            method="POST"
+            style="display:inline;">
+
+            <button
+    type="submit"
+    class="button secondary">
+
+    {% if item.cherishes|length == 0 %}
+
+        🤍 Cherish
+
+    {% else %}
+
+        {% if item.is_cherished %}
+            💛
+        {% else %}
+            🤍
+        {% endif %}
+
+        {{ item.cherishes|length }}
+        {{ "Cherish" if item.cherishes|length == 1 else "Cherishes" }}
+
+    {% endif %}
+
+</button>
+    
+    </form>
+
+    {% else %}
+
+        <form
+            action="{{ url_for(
+                'cherish.cherish_note',
+                note_id=item.id
+            ) }}"
+            method="POST"
+            style="display:inline;">
+
+        <button
+    type="submit"
+    class="button secondary">
+
+    {% if item.cherishes|length == 0 %}
+
+        🤍 Cherish
+
+    {% else %}
+
+        {% if item.is_cherished %}
+            💛
+        {% else %}
+            🤍
+        {% endif %}
+
+        {{ item.cherishes|length }}
+        {{ "Cherish" if item.cherishes|length == 1 else "Cherishes" }}
+
+    {% endif %}
+
+</button>
+
+        </form>
+
+    {% endif %}
+
+    {% if item.__class__.__name__ == "Poem" %}
+
+        <a href="{{ url_for(
+            'poem.view_poem',
+            poem_id=item.id
+        ) }}"
+        class="button">
+
+            Read →
+
+        </a>
+
+    {% else %}
+
+        <a href="{{ url_for(
+            'note.view_note',
+            note_id=item.id
+        ) }}"
+        class="button">
+
+            Read →
+
+        </a>
+
+    {% endif %}
+
+</div>
+</article>
+
+{% endfor %}
+      
+
+            {% else %}
+
+                <p class="empty-state">
+
+                    Nothing has bloomed yet.
+
+                    <br><br>
+
+                    Be the first gardener to share something beautiful.
+
+                </p>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

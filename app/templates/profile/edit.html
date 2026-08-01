@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/poem.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+    <main class="container">
+        <div class="card">
+            <a href="{{ url_for('profile.index') }}" class="back-link">← Back to Profile</a>
+            <h1>Edit Profile</h1>
+            <blockquote>
+                A few quiet words<br>
+                can shape the garden.
+            </blockquote>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('profile.edit_profile') }}">
+                <label for="bio">Bio</label>
+                <textarea id="bio" name="bio" placeholder="Share a little about yourself..." maxlength="250">{{ bio }}</textarea>
+
+                <div class="buttons">
+                    <a href="{{ url_for('profile.index') }}" class="cancel">Cancel</a>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

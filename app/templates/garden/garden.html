@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Garden • The Sunflower Diaries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/garden.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+    <div class="page-shell">
+        <div class="garden-card">
+            <div class="flower">🌼</div>
+            <p class="eyebrow">A quiet corner for your words</p>
+            <h1>My Garden</h1>
+            <p class="quote">Some flowers bloom without asking to be seen.</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <div class="actions">
+                <a href="{{ url_for('poem.create_poem') }}" class="action-card">
+                    <div class="icon">🌻</div>
+                    <h2>Plant a Poem</h2>
+                    <p>Let your verses bloom.</p>
+                </a>
+
+                <a href="{{ url_for('note.create_note') }}" class="action-card">
+                    <div class="icon">📝</div>
+                    <h2>Plant a Note</h2>
+                    <p>Keep today's thoughts safe.</p>
+                </a>
+
+                <a href="{{ url_for('explore.home') }}" class="action-card">
+                    <div class="icon">🌍</div>
+                    <h2>Explore</h2>
+                    <p>Discover poems that have bloomed for everyone.</p>
+                </a>
+
+                <a href="{{ url_for('poem.my_poems') }}" class="action-card">
+                    <div class="icon">📖</div>
+                    <h2>My Poems</h2>
+                    <p>Read everything you've planted.</p>
+                </a>
+
+                <a href="{{ url_for('note.my_notes') }}" class="action-card">
+                    <div class="icon">📓</div>
+                    <h2>My Notes</h2>
+                    <p>Quiet reflections live here.</p>
+                </a>
+
+                <a href="{{ url_for('profile.index') }}" class="action-card">
+                    <div class="icon">👤</div>
+                    <h2>Profile</h2>
+                    <p>Manage your personal space.</p>
+                </a>
+            </div>
+
+            <a href="{{ url_for('auth.logout') }}" class="logout">Sign Out</a>
+        </div>
+    </div>
+</body>
+</html>
