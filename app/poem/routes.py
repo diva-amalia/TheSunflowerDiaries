@@ -153,11 +153,20 @@ def view_poem(poem_id):
 
     poem = _get_poem(poem_id)
 
-    back_url = (
-        url_for("poem.my_poems")
-        if poem.user_id == current_user.id
-        else url_for("explore.home")
-    )
+    from_page = request.args.get("from_page")
+    anchor = request.args.get("anchor")
+
+    if from_page == "explore" and anchor:
+
+        back_url = url_for("explore.home") + f"#{anchor}"
+
+    else:
+
+        back_url = (
+            url_for("poem.my_poems")
+            if poem.user_id == current_user.id
+            else url_for("explore.home")
+        )
 
     return render_template(
         "poem/view.html",

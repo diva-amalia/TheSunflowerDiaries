@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,9 +58,16 @@
 
         <div class="explore-search">
 
+            <form
+            action="{{ url_for('explore.home') }}"
+            method="GET">
+
             <input
                 type="search"
+                name="q"
+                value="{{ search_query }}"
                 placeholder="🔎 Search poems, notes, or gardeners...">
+            </form>
 
         </div>
 
@@ -91,6 +100,32 @@
 
         </nav>
 
+        {% if users %}
+
+<section class="gardeners-result">
+
+<h2>
+🌱 Gardeners
+</h2>
+
+{% for user in users %}
+
+<a
+    href="{{ url_for(
+        'profile.public_profile',
+        username=user.username
+    ) }}"
+    class="feed-username">
+
+    @{{ user.username }}
+
+</a>
+
+{% endfor %}
+
+</section>
+
+{% endif %}
         <!-- ==========================
              FEED
         =========================== -->
@@ -103,7 +138,9 @@
 
 
 
-<article class="poem-card">
+<article
+    id="item-{{ item.__class__.__name__ }}-{{ item.id }}"
+    class="poem-card">
 
     <!-- ==========================
          USERNAME & DATE
@@ -198,6 +235,7 @@
     {% if item.__class__.__name__ == "Poem" %}
 
         <form
+            class="cherish-form"
             action="{{ url_for(
                 'cherish.cherish_poem',
                 poem_id=item.id
@@ -205,15 +243,13 @@
             method="POST"
             style="display:inline;">
 
-            <button
+            
+
+    <button
     type="submit"
-    class="button secondary">
+    class="button secondary cherish-button">
 
-    {% if item.cherishes|length == 0 %}
-
-        🤍 Cherish
-
-    {% else %}
+    <span class="cherish-icon">
 
         {% if item.is_cherished %}
             💛
@@ -221,10 +257,22 @@
             🤍
         {% endif %}
 
-        {{ item.cherishes|length }}
-        {{ "Cherish" if item.cherishes|length == 1 else "Cherishes" }}
+    </span>
 
-    {% endif %}
+    <span class="cherish-text">
+
+        {% if item.cherishes|length == 0 %}
+
+            Cherish
+
+        {% else %}
+
+            {{ item.cherishes|length }}
+
+        {% endif %}
+
+    </span>
+
 
 </button>
     
@@ -232,7 +280,8 @@
 
     {% else %}
 
-        <form
+                    <form
+            class="cherish-form"
             action="{{ url_for(
                 'cherish.cherish_note',
                 note_id=item.id
@@ -240,15 +289,13 @@
             method="POST"
             style="display:inline;">
 
-        <button
+
+
+    <button
     type="submit"
-    class="button secondary">
+    class="button secondary cherish-button">
 
-    {% if item.cherishes|length == 0 %}
-
-        🤍 Cherish
-
-    {% else %}
+    <span class="cherish-icon">
 
         {% if item.is_cherished %}
             💛
@@ -256,11 +303,24 @@
             🤍
         {% endif %}
 
-        {{ item.cherishes|length }}
-        {{ "Cherish" if item.cherishes|length == 1 else "Cherishes" }}
+    </span>
 
-    {% endif %}
+    <span class="cherish-text">
 
+        {% if item.cherishes|length == 0 %}
+
+            Cherish
+
+        {% else %}
+
+            {{ item.cherishes|length }}
+            
+
+        {% endif %}
+
+    </span>
+
+    
 </button>
 
         </form>
@@ -270,26 +330,30 @@
     {% if item.__class__.__name__ == "Poem" %}
 
         <a href="{{ url_for(
-            'poem.view_poem',
-            poem_id=item.id
-        ) }}"
-        class="button">
+    'poem.view_poem',
+    poem_id=item.id,
+    from_page='explore',
+    anchor='item-' ~ item.__class__.__name__ ~ '-' ~ item.id
+    ) }}"
+    class="button">
 
-            Read →
+    Read →
 
-        </a>
+    </a>
 
     {% else %}
 
         <a href="{{ url_for(
-            'note.view_note',
-            note_id=item.id
-        ) }}"
-        class="button">
+    'note.view_note',
+    note_id=item.id,
+    from_page='explore',
+    anchor='item-' ~ item.__class__.__name__ ~ '-' ~ item.id
+) }}"
+class="button">
 
-            Read →
+    Read →
 
-        </a>
+</a>
 
     {% endif %}
 
@@ -318,6 +382,8 @@
     </div>
 
 </main>
+
+<script src="{{ url_for('static', filename='js/cherish.js') }}"></script>
 
 </body>
 

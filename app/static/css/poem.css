@@ -911,3 +911,19 @@ button:hover{
 .feed-username:active {
     color: inherit;
 }
+.cherish-button {
+    transition: all 0.2s ease;
+}
+
+.cherish-button:hover {
+    transform: scale(1.05);
+}
+
+.cherish-button:active {
+    transform: scale(0.95);
+}
+
+.cherish-button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}

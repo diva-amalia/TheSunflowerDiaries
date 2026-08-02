@@ -1,4 +1,4 @@
-from flask import redirect, request
+from flask import jsonify
 from flask_login import current_user, login_required
 
 from app.extensions import db
@@ -41,10 +41,10 @@ def cherish_poem(poem_id):
 
     db.session.commit()
 
-    return redirect(
-        request.referrer or "/"
-    )
-
+    return jsonify({
+    "cherished": existing is None,
+    "count": len(poem.cherishes),
+})
 
 # ==========================
 # CHERISH NOTE
@@ -76,6 +76,7 @@ def cherish_note(note_id):
 
     db.session.commit()
 
-    return redirect(
-        request.referrer or "/"
-    )
+    return jsonify({
+    "cherished": existing is None,
+    "count": len(note.cherishes),
+})

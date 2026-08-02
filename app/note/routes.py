@@ -149,17 +149,26 @@ def my_notes():
 @login_required
 def view_note(note_id):
 
-    note_obj = _get_note(note_id)
+    note = _get_note(note_id)
 
-    back_url = (
-        url_for("note.my_notes")
-        if note_obj.user_id == current_user.id
-        else url_for("garden.home")
-    )
+    from_page = request.args.get("from_page")
+    anchor = request.args.get("anchor")
+
+    if from_page == "explore" and anchor:
+
+        back_url = url_for("explore.home") + f"#{anchor}"
+
+    else:
+
+        back_url = (
+            url_for("note.my_notes")
+            if note.user_id == current_user.id
+            else url_for("explore.home")
+        )
 
     return render_template(
         "note/view.html",
-        note=note_obj,
+        note=note,
         back_url=back_url,
     )
 
