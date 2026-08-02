@@ -29,13 +29,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 32px 20px;
+    padding: 14px 10px;
 }
 
 .glass-card {
-    width: min(100%, 560px);
-    padding: 42px 36px;
-    border-radius: 28px;
+    width: min(100%, 400px);
+    padding: 20px 16px;
+    border-radius: 22px;
     background: rgba(255, 252, 245, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.75);
     box-shadow: 0 24px 60px rgba(57, 42, 20, 0.2);
@@ -44,58 +44,59 @@ body {
 }
 
 .sunflower {
-    font-size: 3.3rem;
-    margin-bottom: 10px;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
 }
 
 .eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.24em;
-    font-size: 0.74rem;
+    font-size: 0.65rem;
     color: #9b7031;
     margin-bottom: 8px;
 }
 
 h1 {
     font-family: "Cormorant Garamond", serif;
-    font-size: 3rem;
+    font-size: 1.35rem;
     color: #3f4b2b;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .welcome {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #7a6848;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 h2 {
     font-family: "Cormorant Garamond", serif;
-    font-size: 1.7rem;
+    font-size: 1.05rem;
     color: #5d4a28;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .verse {
-    font-size: 1rem;
-    line-height: 1.9;
+    font-size: 0.825rem;
+    line-height: 1.55;
     color: #644f34;
-    margin: 18px 0 20px;
+    margin: 8px 0 10px;
 }
 
 .divider {
     color: #9a7540;
-    margin: 8px 0 20px;
+    margin: 7px 0 16px;
     letter-spacing: 0.2em;
 }
 
 .enter-button {
     display: inline-block;
     text-decoration: none;
-    padding: 13px 22px;
+    padding: 7px 12px;
     border-radius: 999px;
     background: linear-gradient(135deg, #bc8f2f 0%, #e1b96c 100%);
     color: white;
+    font-size: 0.8rem;
     font-weight: 600;
     box-shadow: 0 10px 24px rgba(158, 112, 29, 0.22);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -129,10 +130,10 @@ h2 {
 
 @media (max-width: 640px) {
     .glass-card {
-        padding: 32px 24px;
+        padding: 16px 12px;
     }
 
     h1 {
-        font-size: 2.4rem;
+        font-size: 1.25rem;
     }
 }

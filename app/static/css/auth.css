@@ -43,7 +43,7 @@ body {
     justify-content: center;
     align-items: center;
 
-    padding: 40px;
+    padding: 14px;
 
     background: var(--background);
 
@@ -74,13 +74,13 @@ body {
 .card {
 
     width: 100%;
-    max-width: 480px;
+    max-width: 340px;
 
     background: var(--surface);
 
-    padding: 45px;
+    padding: 16px;
 
-    border-radius: var(--radius);
+    border-radius: 14px;
 
     box-shadow: var(--shadow);
 
@@ -92,11 +92,11 @@ body {
 
 .logo {
 
-    font-size: 52px;
+    font-size: 1.8rem;
 
     text-align: center;
 
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 
 }
 
@@ -108,11 +108,11 @@ body {
 
     font-family: "Cormorant Garamond", serif;
 
-    font-size: 42px;
+    font-size: 1.35rem;
 
     text-align: center;
 
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 
 }
 
@@ -120,9 +120,9 @@ body {
 
     text-align: center;
 
-    font-size: 24px;
+    font-size: 1.05rem;
 
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 
 }
 
@@ -132,9 +132,11 @@ body {
 
     color: var(--text-light);
 
-    line-height: 1.7;
+    line-height: 1.45;
 
-    margin-bottom: 30px;
+    margin-bottom: 12px;
+
+    font-size: 0.875rem;
 
 }
 
@@ -152,23 +154,25 @@ form {
 
 label {
 
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 
     font-weight: 600;
+
+    font-size: 0.8rem;
 
 }
 
 input {
 
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
-    padding: 14px 16px;
+    padding: 7px 10px;
 
     border: 1px solid var(--border);
 
-    border-radius: 12px;
+    border-radius: 10px;
 
-    font-size: 15px;
+    font-size: 0.8rem;
 
     transition: var(--transition);
 
@@ -190,23 +194,25 @@ input:focus {
 
 button {
 
-    margin-top: 10px;
+    margin-top: 8px;
 
-    padding: 15px;
+    padding: 7px 12px;
 
     border: none;
 
-    border-radius: 12px;
+    border-radius: 10px;
 
     background: var(--primary);
 
     color: white;
 
-    font-size: 16px;
+    font-size: 0.8rem;
 
     font-weight: 600;
 
     cursor: pointer;
+
+    min-height: 34px;
 
     transition: var(--transition);
 
@@ -226,7 +232,7 @@ button:hover {
 
 .footer {
 
-    margin-top: 28px;
+    margin-top: 20px;
 
     text-align: center;
 
@@ -264,31 +270,31 @@ button:hover {
 
     body {
 
-        padding: 20px;
+        padding: 8px 10px;
 
     }
 
     .card {
 
-        padding: 32px 24px;
+        padding: 18px 14px;
 
     }
 
     .logo {
 
-        font-size: 44px;
+        font-size: 1.8rem;
 
     }
 
     .card h1 {
 
-        font-size: 34px;
+        font-size: 1.4rem;
 
     }
 
     .card h2 {
 
-        font-size: 22px;
+        font-size: 1.1rem;
 
     }
 
