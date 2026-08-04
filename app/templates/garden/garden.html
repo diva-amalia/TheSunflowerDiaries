@@ -15,22 +15,40 @@
 <body>
     <div class="page-shell">
         <div class="garden-card">
-            <div class="flower">🌼</div>
-            <p class="eyebrow">A quiet corner for your words</p>
-            <h1>My Garden</h1>
-            <p class="quote">Some flowers bloom without asking to be seen.</p>
 
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash {{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+    <div class="garden-hero">
+
+        <div class="flower">🌼</div>
+
+        <p class="eyebrow">
+            A quiet corner...
+        </p>
+
+        <h1>My Garden</h1>
+
+        <p class="quote">
+            Some flowers bloom without asking to be seen.
+        </p>
+
+    </div>
+
+    <div class="actions">
+
+        ...
+
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">
+                    {{ message }}
                 </div>
-            {% endif %}
-            {% endwith %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
 
             <div class="actions">
                 <a href="{{ url_for('poem.create_poem') }}" class="action-card">
@@ -70,7 +88,7 @@
                 </a>
             </div>
 
-            <a href="{{ url_for('auth.logout') }}" class="logout">Sign Out</a>
+
         </div>
     </div>
 </body>

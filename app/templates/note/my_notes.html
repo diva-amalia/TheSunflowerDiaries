@@ -42,7 +42,9 @@
                                         {{ '🌍 Public' if note.is_public else '🔒 Private' }}
                                     </span>
                                 </div>
-                                <time datetime="{{ note.created_at.isoformat() }}">{{ note.created_at.strftime('%B %d, %Y') }}</time>
+                                <time 
+                                class="community-date"
+                                datetime="{{ note.created_at.isoformat() }}">{{ note.created_at.strftime('%B %d, %Y') }}</time>
                             </div>
                             <p class="poem-preview">{{ note.content[:180] }}{% if note.content|length > 180 %}…{% endif %}</p>
                             <div class="poem-actions">

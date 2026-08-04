@@ -54,6 +54,11 @@ class User(UserMixin, db.Model):
         nullable=True,
     )
 
+    avatar = db.Column(
+    db.String(255),
+    nullable=True,
+    )
+
     poems = db.relationship(
         "Poem",
         back_populates="author",
@@ -72,6 +77,22 @@ class User(UserMixin, db.Model):
     back_populates="user",
     cascade="all, delete-orphan",
 )
+
+    following = db.relationship(
+        "Follow",
+        foreign_keys="Follow.follower_id",
+        back_populates="follower",
+        cascade="all, delete-orphan",
+        lazy=True,
+    )
+
+    followers = db.relationship(
+        "Follow",
+        foreign_keys="Follow.following_id",
+        back_populates="following",
+        cascade="all, delete-orphan",
+        lazy=True,
+    )
 
     # ==========================
     # PASSWORD METHODS
@@ -242,6 +263,52 @@ class Note(db.Model):
             f"id={self.id} "
             f"title='{self.title}'>"
         )
+
+class Follow(db.Model):
+    """
+    Follow relationship between users.
+    """
+
+    __tablename__ = "follows"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    follower_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=False,
+    )
+
+    following_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=False,
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+    )
+
+    follower = db.relationship(
+        "User",
+        foreign_keys=[follower_id],
+        back_populates="following",
+    )
+
+    following = db.relationship(
+        "User",
+        foreign_keys=[following_id],
+        back_populates="followers",
+    )
+
+    def __repr__(self):
+        return f"<Follow follower_id={self.follower_id} following_id={self.following_id}>"
+
 
 class Cherish(db.Model):
     """

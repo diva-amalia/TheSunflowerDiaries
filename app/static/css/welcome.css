@@ -17,7 +17,7 @@ body {
     inset: 0;
     background:
         linear-gradient(120deg, rgba(255, 247, 228, 0.4), rgba(255, 245, 214, 0.2)),
-        url("{{ url_for('static', filename='img/andbees.jfif') }}") center/cover no-repeat;
+        url("{{ url_for('static', filename='images/andbees.jfif') }}") center/cover no-repeat;
     filter: saturate(1.1) contrast(1.05);
     z-index: 0;
 }

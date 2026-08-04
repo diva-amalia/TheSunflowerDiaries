@@ -3,7 +3,7 @@ from flask import (
     render_template,
 )
 
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from app.models import (
     User,
@@ -51,6 +51,18 @@ def public_profile(username):
         .all()
     )
 
+    blooms = sorted(
+        public_poems + public_notes,
+        key=lambda bloom: bloom.created_at,
+        reverse=True,
+    )
+
+    for bloom in blooms:
+        bloom.is_cherished = any(
+            cherish.user_id == current_user.id
+            for cherish in bloom.cherishes
+        )
+
     stats = {
 
         "poems": len(public_poems),
@@ -65,9 +77,7 @@ def public_profile(username):
 
         user=profile_user,
 
-        poems=public_poems,
-
-        notes=public_notes,
+        blooms=blooms,
 
         stats=stats,
 

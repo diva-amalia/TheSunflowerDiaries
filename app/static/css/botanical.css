@@ -1,0 +1,440 @@
+/*==========================================================
+
+                THE SUNFLOWER DIARIES
+
+                Botanical Design System
+
+                Version : 1.0
+
+                Designed by:
+                Diva Amalia
+
+                Theme:
+                Soft Botanical Journal
+
+------------------------------------------------------------
+
+Design Principles
+
+🌻 Soft
+🌿 Natural
+🤍 Paper-like
+🍃 Calm
+☀ Warm
+
+UI Rules
+
+✓ Rounded corners
+✓ Soft shadows
+✓ Earth-tone colors
+✓ White paper cards
+✓ Gentle transitions
+✓ Plenty of whitespace
+✓ Botanical atmosphere
+✓ No harsh black
+✓ No neon colors
+
+==========================================================*/
+
+
+/* ==========================================
+   COLOR PALETTE
+========================================== */
+
+:root{
+
+    --paper:#fffdf9;
+
+    --paper-soft:#fcf8f1;
+
+    --sunflower:#d4af37;
+
+    --sunflower-dark:#b98b18;
+
+    --olive:#56633d;
+
+    --olive-light:#71845a;
+
+    --text:#403625;
+
+    --shadow:rgba(76,54,25,.10);
+
+}
+
+
+/* ==========================================
+   TYPOGRAPHY
+========================================== */
+
+body{
+
+    font-family:"Inter",sans-serif;
+
+    color:var(--text);
+
+    line-height:1.7;
+
+}
+
+h1,
+h2,
+h3,
+h4{
+
+    font-family:"Cormorant Garamond",serif;
+
+    color:var(--olive);
+
+    font-weight:600;
+
+}
+
+p{
+
+    color:#5d5142;
+
+}
+
+
+
+/* ==========================================
+   BOTANICAL LAYER
+========================================== */
+
+.container{
+
+    position:relative;
+
+    z-index:1;
+
+}
+
+.container::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.90),
+            rgba(255,255,255,.90)
+        ),
+        url("../images/sunflowers.jfif");
+
+    background-size:360px;
+
+    background-repeat:repeat;
+
+    opacity:.45;
+
+    border-radius:30px;
+
+    z-index:-1;
+
+}
+
+/* ==========================================
+   EXPLORE BOTANICAL SECTION
+========================================== */
+
+.explore-feed{
+
+    position:relative;
+
+    padding:32px;
+
+    border-radius:24px;
+
+}
+
+.explore-feed::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.45),
+            rgba(255,255,255,.45)
+        ),
+        url("../images/andbees.jfif");
+
+    background-size:420px;   /* gambar lebih besar */
+    background-repeat:repeat;
+    background-position:center;
+
+    border-radius:24px;
+
+    opacity:.95;
+
+    z-index:-1;
+
+}
+/* ==========================================
+   PAPER CARDS
+========================================== */
+
+.card,
+.poem-card{
+
+    background:var(--paper);
+
+    border-radius:22px;
+
+    border:1px solid rgba(212,175,55,.14);
+
+    box-shadow:
+        0 15px 40px var(--shadow);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+}
+
+.card:hover,
+.poem-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 20px 45px rgba(76,54,25,.14);
+
+}
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.button{
+
+    border-radius:999px;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+
+}
+
+.button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ==========================================
+   BADGES
+========================================== */
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:.35rem;
+
+    padding:.35rem .8rem;
+
+    border-radius:999px;
+
+    background:#f7f0dc;
+
+    color:#87692f;
+
+    font-size:.82rem;
+
+    font-weight:500;
+
+}
+
+
+/* ==========================================
+   FORMS
+========================================== */
+
+input,
+textarea,
+select{
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+
+    outline:none;
+
+    border-color:var(--sunflower);
+
+    box-shadow:
+        0 0 0 4px rgba(212,175,55,.16);
+
+}
+
+
+/* ==========================================
+   LINKS
+========================================== */
+
+a{
+
+    transition:
+        color .2s ease;
+
+}
+
+a:hover{
+
+    color:var(--sunflower-dark);
+
+}
+
+
+/* ==========================================
+   FLASH MESSAGES
+========================================== */
+
+.flash{
+
+    background:#fff9ec;
+
+    border:1px solid rgba(212,175,55,.18);
+
+    border-radius:16px;
+
+    padding:14px 18px;
+
+    color:#5d5142;
+
+    box-shadow:
+        0 10px 25px rgba(76,54,25,.06);
+
+}
+
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f4ecd8;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#c8a74f;
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#b98b18;
+
+}
+
+
+/* ==========================================
+   TEXT SELECTION
+========================================== */
+
+::selection{
+
+    background:var(--sunflower);
+
+    color:white;
+
+}
+
+
+/* ==========================================
+   GLOBAL ANIMATIONS
+========================================== */
+
+.card,
+.button,
+input,
+textarea,
+select{
+
+    transition:
+        all .25s ease;
+
+}
+
+
+/* ==========================================
+   UTILITIES
+========================================== */
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.mt-1{
+
+    margin-top:1rem;
+
+}
+
+.mt-2{
+
+    margin-top:2rem;
+
+}
+
+.mb-1{
+
+    margin-bottom:1rem;
+
+}
+
+.mb-2{
+
+    margin-bottom:2rem;
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:768px){
+
+    .container{
+
+        padding:20px;
+
+    }
+
+    .card{
+
+        border-radius:18px;
+
+    }
+
+}

@@ -13,9 +13,12 @@
     <title>Explore • The Sunflower Diaries</title>
 
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/poem.css') }}">
+      href="{{ url_for('static', filename='css/poem.css') }}">
 
-    <link rel="preconnect"
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/botanical.css') }}">
+    
+      <link rel="preconnect"
           href="https://fonts.googleapis.com">
 
     <link rel="preconnect"
@@ -162,7 +165,9 @@
 
         </div>
 
-        <time datetime="{{ item.created_at.isoformat() }}">
+        <time
+         class="community-date"
+         datetime="{{ item.created_at.isoformat() }}">
 
             {{ item.created_at.strftime('%B %d, %Y') }}
 

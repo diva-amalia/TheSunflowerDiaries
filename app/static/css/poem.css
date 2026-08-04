@@ -14,10 +14,10 @@ body{
 
     background:
         linear-gradient(
-            rgba(255,248,235,.88),
-            rgba(255,248,235,.88)
+            rgba(255,248,235,.20),
+            rgba(255,248,235,.20)
         ),
-        url("../img/andbees.jfif");
+        url("../images/sunflowers.jfif");
 
     background-size:cover;
     background-position:center;
@@ -853,7 +853,7 @@ button:hover{
 
 .community-date{
 
-    font-size:.6875rem;
+    font-size:.6rem;
 
     color:#8f8678;
 

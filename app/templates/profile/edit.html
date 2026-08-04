@@ -34,7 +34,16 @@
             {% endif %}
             {% endwith %}
 
-            <form method="POST" action="{{ url_for('profile.edit_profile') }}">
+            <form method="POST" action="{{ url_for('profile.edit_profile') }}" enctype="multipart/form-data" class="profile-edit-form">
+                <label for="display_name">Display name</label>
+                <input id="display_name" name="display_name" type="text" value="{{ display_name }}" maxlength="100" required>
+
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" value="{{ username }}" maxlength="50" required>
+
+                <label for="avatar">Profile picture</label>
+                <input id="avatar" name="avatar" type="file" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
+
                 <label for="bio">Bio</label>
                 <textarea id="bio" name="bio" placeholder="Share a little about yourself..." maxlength="250">{{ bio }}</textarea>
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +11,10 @@
     <title>{{ user.display_name }} • The Sunflower Diaries</title>
 
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/poem.css') }}">
+          href="{{ url_for('static', filename='css/botanical.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/profile.css') }}">
 
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
@@ -30,7 +32,7 @@
 
 <main class="container">
 
-<div class="card poems-overview">
+<div class="card profile-card">
 
 <a href="{{ url_for('explore.home') }}"
 class="back-link">
@@ -39,110 +41,248 @@ class="back-link">
 
 </a>
 
+<!-- ==========================================
+     PROFILE HEADER
+========================================== -->
+
+<section class="profile-header">
+
+<div class="profile-avatar">
+
+{% if user.avatar %}
+
+<img
+src="{{ url_for('static', filename=user.avatar) }}"
+alt="Avatar">
+
+{% else %}
+
+<img
+src="{{ url_for('static', filename='images/smallbee.jfif') }}"
+alt="Avatar">
+
+{% endif %}
+
+</div>
+
 <h1>
 
 {{ user.display_name }}
 
 </h1>
 
-<p class="intro">
+<p class="username">
 
 @{{ user.username }}
 
 </p>
 
-<div class="poem-card">
+<p class="joined-date">
 
-<p class="poem-preview">
+Joined {{ user.created_at.strftime("%B %Y") }}
+
+</p>
+
+<div class="profile-bio">
+
+<p>
 
 {{ user.bio if user.bio else "Blooming quietly 🌻" }}
 
 </p>
 
-<div class="poem-actions"
-style="justify-content:flex-start;">
+</div>
 
-<span class="badge public">
+<div class="follow-stats">
 
-Joined {{ user.created_at.strftime("%B %Y") }}
+<span>
+
+<strong>{{ followers_count }}</strong>
+
+Followers
+
+</span>
+
+<span>•</span>
+
+<span>
+
+<strong>{{ following_count }}</strong>
+
+Following
 
 </span>
 
 </div>
 
+<div class="profile-action">
+
+{% if user.id == current_user.id %}
+
+<a href="{{ url_for('profile.edit_profile') }}" class="button">
+
+Edit Profile
+
+</a>
+
+{% elif is_following %}
+
+<form
+method="POST"
+action="{{ url_for('profile.unfollow_user', user_id=user.id) }}">
+
+<button
+class="button secondary">
+
+Following ✓
+
+</button>
+
+</form>
+
+{% else %}
+
+<form
+method="POST"
+action="{{ url_for('profile.follow_user', user_id=user.id) }}">
+
+<button
+class="button">
+
+Follow
+
+</button>
+
+</form>
+
+{% endif %}
+
 </div>
 
-<div class="poem-list"
-style="margin-top:28px;">
+</section>
 
-<div class="poem-card">
+<!-- ==========================================
+     SNAPSHOT
+========================================== -->
 
-<div class="poem-card-header">
+<section class="profile-section">
 
 <h2>
 
-Garden Snapshot
+🌿 Garden Snapshot
 
 </h2>
 
-</div>
+<div class="snapshot-list">
 
-<div class="poem-preview">
+<div class="snapshot-row">
 
-<p>
+<span>
 
-🌻 Poems :
+🌻 Poems
+
+</span>
+
 <strong>
 
 {{ stats.public_poems }}
 
 </strong>
 
-</p>
+</div>
 
-<p>
+<div class="snapshot-row">
 
-📝 Notes :
+<span>
+
+📝 Notes
+
+</span>
+
 <strong>
 
 {{ stats.public_notes }}
 
 </strong>
 
-</p>
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+� Followers
+
+</span>
+
+<strong>
+
+{{ followers_count }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+🌿 Following
+
+</span>
+
+<strong>
+
+{{ following_count }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+�💛 Cherishes
+
+</span>
+
+<strong>
+
+{{ cherish_count }}
+
+</strong>
 
 </div>
 
 </div>
 
-</div>
+</section>
 
-<div class="poem-list"
-style="margin-top:28px;">
+<!-- ==========================================
+     RECENT BLOOMS
+========================================== -->
 
-<div class="poem-card">
-
-<div class="poem-card-header">
+<section class="profile-section">
 
 <h2>
 
-Recent Blooms
+🌻 Recent Blooms
 
 </h2>
-
-</div>
-
-</div>
 
 {% if blooms %}
 
 {% for bloom in blooms %}
 
-<article class="poem-card">
+<article
+id="item-{{ bloom.__class__.__name__ }}-{{ bloom.id }}"
+class="poem-card">
 
 <div class="community-header">
 
-<a href="{{ url_for(
+<a
+href="{{ url_for(
 'profile.public_profile',
 username=user.username) }}"
 class="community-username">
@@ -152,7 +292,7 @@ class="community-username">
 </a>
 
 <time
-class="community-date"
+class="community-date" 
 datetime="{{ bloom.created_at.isoformat() }}">
 
 {{ bloom.created_at.strftime("%B %d, %Y") }}
@@ -207,23 +347,49 @@ by {{ user.display_name }}
 
 <div class="community-footer">
 
-<span class="community-blooms">
-
-🌻 Blooms
-
-<span class="coming-soon">
-
-(Coming Soon)
-
-</span>
-
-</span>
-
 {% if bloom.__class__.__name__ == "Poem" %}
 
-<a href="{{ url_for(
+<form
+class="cherish-form"
+action="{{ url_for(
+'cherish.cherish_poem',
+poem_id=bloom.id
+) }}"
+method="POST">
+
+<button
+type="submit"
+class="button secondary cherish-button">
+
+<span class="cherish-icon">
+
+{% if bloom.is_cherished %}
+💛
+{% else %}
+🤍
+{% endif %}
+
+</span>
+
+<span class="cherish-text">
+
+{% if bloom.cherishes|length == 0 %}
+Cherish
+{% else %}
+{{ bloom.cherishes|length }}
+{% endif %}
+
+</span>
+
+</button>
+
+</form>
+
+<a
+href="{{ url_for(
 'poem.view_poem',
-poem_id=bloom.id) }}"
+poem_id=bloom.id
+) }}"
 class="button">
 
 Read →
@@ -232,9 +398,47 @@ Read →
 
 {% else %}
 
-<a href="{{ url_for(
+<form
+class="cherish-form"
+action="{{ url_for(
+'cherish.cherish_note',
+note_id=bloom.id
+) }}"
+method="POST">
+
+<button
+type="submit"
+class="button secondary cherish-button">
+
+<span class="cherish-icon">
+
+{% if bloom.is_cherished %}
+💛
+{% else %}
+🤍
+{% endif %}
+
+</span>
+
+<span class="cherish-text">
+
+{% if bloom.cherishes|length == 0 %}
+Cherish
+{% else %}
+{{ bloom.cherishes|length }}
+{% endif %}
+
+</span>
+
+</button>
+
+</form>
+
+<a
+href="{{ url_for(
 'note.view_note',
-note_id=bloom.id) }}"
+note_id=bloom.id
+) }}"
 class="button">
 
 Read →
@@ -259,13 +463,14 @@ Nothing has bloomed yet.
 
 {% endif %}
 
-</div>
+</section>
 
 </div>
 
 </main>
 
+<script src="{{ url_for('static', filename='js/cherish.js') }}"></script>
+
 </body>
 
 </html>
-

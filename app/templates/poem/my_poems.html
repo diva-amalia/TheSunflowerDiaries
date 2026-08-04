@@ -42,7 +42,9 @@
                                         {{ '🌍 Public' if poem.is_public else '🔒 Private' }}
                                     </span>
                                 </div>
-                                <time datetime="{{ poem.created_at.isoformat() }}">{{ poem.created_at.strftime('%B %d, %Y') }}</time>
+                                <time 
+                                class="community-date"
+                                datetime="{{ poem.created_at.isoformat() }}">{{ poem.created_at.strftime('%B %d, %Y') }}</time>
                             </div>
                             <p class="poem-preview">{{ poem.content[:180] }}{% if poem.content|length > 180 %}…{% endif %}</p>
                             <div class="poem-actions">

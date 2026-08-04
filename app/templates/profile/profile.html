@@ -2,128 +2,478 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Profile • The Sunflower Diaries</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/poem.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/botanical.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/profile.css') }}">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
           rel="stylesheet">
+
 </head>
 
 <body>
-    <main class="container">
-        <div class="card poems-overview">
-            <a href="{{ url_for('garden.home') }}" class="back-link">← Back to Garden</a>
-            <h1>{{ user.display_name }}</h1>
-            <p class="intro">A gentle portrait of your garden.</p>
 
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash {{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% endwith %}
+<main class="container">
 
-            <div class="poem-card" style="margin-top: 24px;">
-                <div class="poem-card-header">
-                    <div>
-                        <h2>@{{ user.username }}</h2>
-                        <p class="poem-preview">{{ user.bio if user.bio else 'No bio yet.' }}</p>
-                    </div>
-                    <a href="{{ url_for('profile.edit_profile') }}" class="button secondary">Edit Bio</a>
-                </div>
-                <div class="poem-actions" style="justify-content: flex-start; margin-top: 16px;">
-                    <span class="badge private">Joined {{ user.created_at.strftime('%B %d, %Y') }}</span>
-                </div>
-            </div>
+<div class="card profile-card">
 
-            <div class="poem-list" style="margin-top: 24px;">
-                <div class="poem-card">
-                    <div class="poem-card-header">
-                        <h2>Garden Statistics</h2>
-                    </div>
-                    <div class="poem-preview">
-                        <p>🌻 Total Poems: {{ stats.total_poems }}</p>
-                        <p>📝 Total Notes: {{ stats.total_notes }}</p>
-                        <p>🌍 Public Poems: {{ stats.public_poems }}</p>
-                        <p>🔒 Private Poems: {{ stats.private_poems }}</p>
-                        <p>🌍 Public Notes: {{ stats.public_notes }}</p>
-                        <p>🔒 Private Notes: {{ stats.private_notes }}</p>
-                    </div>
-                </div>
-            </div>
+<a href="{{ url_for('garden.home') }}"
+class="back-link">
 
-            <div class="poem-list" style="margin-top: 24px;">
-                <div class="poem-card">
-                    <div class="poem-card-header">
-                        <h2>My Writings</h2>
-                    </div>
-                    <div class="poem-actions" style="justify-content: flex-start; margin-top: 12px;">
-                        <a href="#poems" class="button secondary">Poems</a>
-                        <a href="#notes" class="button secondary">Notes</a>
-                    </div>
-                </div>
+← Back to Garden
 
-                <div id="poems" class="poem-list" style="margin-top: 18px;">
-                    {% if poems %}
-                        {% for poem in poems %}
-                            <article class="poem-card">
-                                <div class="poem-card-header">
-                                    <div class="poem-title-block">
-                                        <h2>{{ poem.title }}</h2>
-                                        <span class="badge {{ 'public' if poem.is_public else 'private' }}">
-                                            {{ '🌍 Public' if poem.is_public else '🔒 Private' }}
-                                        </span>
-                                    </div>
-                                    <time datetime="{{ poem.created_at.isoformat() }}">{{ poem.created_at.strftime('%B %d, %Y') }}</time>
-                                </div>
-                                <p class="poem-preview">{{ poem.content[:180] }}{% if poem.content|length > 180 %}…{% endif %}</p>
-                                <div class="poem-actions">
-                                    <a href="{{ url_for('poem.view_poem', poem_id=poem.id) }}" class="button secondary">View</a>
-                                    <a href="{{ url_for('poem.edit_poem', poem_id=poem.id) }}" class="button secondary">Edit</a>
-                                    <a href="{{ url_for('poem.remove_poem', poem_id=poem.id) }}" class="button secondary">Delete</a>
-                                </div>
-                            </article>
-                        {% endfor %}
-                    {% else %}
-                        <p class="empty-state">No poems written yet.</p>
-                    {% endif %}
-                </div>
+</a>
 
-                <div id="notes" class="poem-list" style="margin-top: 18px;">
-                    {% if notes %}
-                        {% for note in notes %}
-                            <article class="poem-card">
-                                <div class="poem-card-header">
-                                    <div class="poem-title-block">
-                                        <h2>{{ note.title }}</h2>
-                                        <span class="badge {{ 'public' if note.is_public else 'private' }}">
-                                            {{ '🌍 Public' if note.is_public else '🔒 Private' }}
-                                        </span>
-                                    </div>
-                                    <time datetime="{{ note.created_at.isoformat() }}">{{ note.created_at.strftime('%B %d, %Y') }}</time>
-                                </div>
-                                <p class="poem-preview">{{ note.content[:180] }}{% if note.content|length > 180 %}…{% endif %}</p>
-                                <div class="poem-actions">
-                                    <a href="{{ url_for('note.view_note', note_id=note.id) }}" class="button secondary">View</a>
-                                    <a href="{{ url_for('note.edit_note', note_id=note.id) }}" class="button secondary">Edit</a>
-                                    <a href="{{ url_for('note.delete_note', note_id=note.id) }}" class="button secondary">Delete</a>
-                                </div>
-                            </article>
-                        {% endfor %}
-                    {% else %}
-                        <p class="empty-state">No notes written yet.</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </main>
+<!-- ==========================================
+     PROFILE HEADER
+========================================== -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-messages">
+{% for category, message in messages %}
+<div class="flash {{ category }}">
+{{ message }}
+</div>
+{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<section class="profile-header">
+
+<div class="profile-avatar">
+
+{% if user.avatar %}
+
+<img src="{{ url_for('static', filename=user.avatar) }}"
+alt="Avatar">
+
+{% else %}
+
+<img src="{{ url_for('static', filename='images/smallbee.jfif') }}"
+alt="Avatar">
+
+{% endif %}
+
+</div>
+
+<h1>
+
+{{ user.display_name }}
+
+</h1>
+
+<p class="username">
+
+@{{ user.username }}
+
+</p>
+
+<p class="joined-date">
+
+Joined {{ user.created_at.strftime("%B %Y") }}
+
+</p>
+
+<div class="profile-bio">
+
+<p>
+
+{{ user.bio if user.bio else "Blooming quietly 🌻" }}
+
+</p>
+
+<a href="{{ url_for('profile.edit_profile') }}"
+class="edit-bio">
+
+✏ Edit
+
+</a>
+
+</div>
+
+<div class="follow-stats">
+
+<span>
+
+<strong>{{ stats.followers }}</strong>
+
+Followers
+
+</span>
+
+<span>•</span>
+
+<span>
+
+<strong>{{ stats.following }}</strong>
+
+Following
+
+</span>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+     SNAPSHOT
+========================================== -->
+
+<section class="profile-section">
+
+<h2>
+
+🌿 Garden Snapshot
+
+</h2>
+
+<div class="snapshot-list">
+
+<div class="snapshot-row">
+
+<span>
+
+🌻 Total Poems
+
+</span>
+
+<strong>
+
+{{ stats.total_poems }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+📝 Total Notes
+
+</span>
+
+<strong>
+
+{{ stats.total_notes }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+🌍 Public Poems
+
+</span>
+
+<strong>
+
+{{ stats.public_poems }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+🔒 Private Poems
+
+</span>
+
+<strong>
+
+{{ stats.private_poems }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+🌍 Public Notes
+
+</span>
+
+<strong>
+
+{{ stats.public_notes }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+🔒 Private Notes
+
+</span>
+
+<strong>
+
+{{ stats.private_notes }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+👥 Followers
+
+</span>
+
+<strong>
+
+{{ stats.followers }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+🌿 Following
+
+</span>
+
+<strong>
+
+{{ stats.following }}
+
+</strong>
+
+</div>
+
+<div class="snapshot-row">
+
+<span>
+
+💛 Cherishes Received
+
+</span>
+
+<strong>
+
+{{ stats.cherishes_received }}
+
+</strong>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+     MY BLOOMS
+========================================== -->
+
+<section class="profile-section">
+
+<h2>
+
+🌻 My Blooms
+
+</h2>
+
+{% if poems %}
+
+{% for poem in poems %}
+
+<article class="poem-card">
+
+<div class="community-header">
+
+<time
+class="community-date"
+datetime="{{ poem.created_at.isoformat() }}">
+
+{{ poem.created_at.strftime("%B %d, %Y") }}
+
+</time>
+
+</div>
+
+<span class="content-type">
+
+🌻 Poem
+
+</span>
+
+<h2 class="community-title">
+
+{{ poem.title }}
+
+</h2>
+
+<div class="community-divider"></div>
+
+<p class="poem-preview">
+
+{{ poem.content[:180] }}
+
+{% if poem.content|length > 180 %}
+…
+{% endif %}
+
+</p>
+
+<div class="community-divider"></div>
+
+<div class="community-footer">
+
+<a href="{{ url_for('poem.view_poem', poem_id=poem.id) }}"
+class="button secondary">
+
+Read →
+
+</a>
+
+<a href="{{ url_for('poem.edit_poem', poem_id=poem.id) }}"
+class="button secondary">
+
+Edit
+
+</a>
+
+<a href="{{ url_for('poem.remove_poem', poem_id=poem.id) }}"
+class="button danger">
+
+Delete
+
+</a>
+
+</div>
+
+</article>
+
+{% endfor %}
+
+{% endif %}
+
+{% if notes %}
+
+{% for note in notes %}
+
+<article class="poem-card">
+
+<div class="community-header">
+
+<time
+class="community-date"
+datetime="{{ note.created_at.isoformat() }}">
+
+{{ note.created_at.strftime("%B %d, %Y") }}
+
+</time>
+
+</div>
+
+<span class="content-type">
+
+📝 Note
+
+</span>
+
+<h2 class="community-title">
+
+{{ note.title }}
+
+</h2>
+
+<div class="community-divider"></div>
+
+<p class="poem-preview">
+
+{{ note.content[:180] }}
+
+{% if note.content|length > 180 %}
+…
+{% endif %}
+
+</p>
+
+<div class="community-divider"></div>
+
+<div class="community-footer">
+
+<a href="{{ url_for('note.view_note', note_id=note.id) }}"
+class="button secondary">
+
+Read →
+
+</a>
+
+<a href="{{ url_for('note.edit_note', note_id=note.id) }}"
+class="button secondary">
+
+Edit
+
+</a>
+
+<a href="{{ url_for('note.delete_note', note_id=note.id) }}"
+class="button danger">
+
+Delete
+
+</a>
+
+</div>
+
+</article>
+
+{% endfor %}
+
+{% endif %}
+
+{% if not poems and not notes %}
+
+<p class="empty-state">
+
+Nothing has bloomed yet.
+
+</p>
+
+{% endif %}
+
+</section>
+
+</div>
+
+</main>
+
 </body>
+
 </html>
