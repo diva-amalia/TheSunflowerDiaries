@@ -1,5 +1,19 @@
+# Virtual environment
 venv/
+.venv/
+
+# Python cache
 __pycache__/
 *.pyc
+
+# Environment variables
 .env
+
+# Flask instance
 instance/
+
+# SQLite database
+*.db
+
+# User uploads
+app/static/uploads/

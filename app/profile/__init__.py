@@ -1,4 +1,3 @@
 from .routes import profile
 
-
-__all__ = ["profile"]
+import app.profile.public_routes

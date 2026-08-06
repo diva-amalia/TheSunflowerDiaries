@@ -94,6 +94,22 @@ class User(UserMixin, db.Model):
         lazy=True,
     )
 
+    notifications_received = db.relationship(
+        "Notification",
+        foreign_keys="Notification.recipient_id",
+        back_populates="recipient",
+        cascade="all, delete-orphan",
+        lazy=True,
+    )
+
+    notifications_sent = db.relationship(
+        "Notification",
+        foreign_keys="Notification.sender_id",
+        back_populates="sender",
+        cascade="all, delete-orphan",
+        lazy=True,
+    )
+
     # ==========================
     # PASSWORD METHODS
     # ==========================
@@ -308,6 +324,74 @@ class Follow(db.Model):
 
     def __repr__(self):
         return f"<Follow follower_id={self.follower_id} following_id={self.following_id}>"
+
+
+class Notification(db.Model):
+    """
+    Notification for user actions.
+    """
+
+    __tablename__ = "notifications"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    recipient_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=False,
+    )
+
+    sender_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=False,
+    )
+
+    type = db.Column(
+        db.String(50),
+        nullable=False,
+    )
+
+    object_id = db.Column(
+        db.Integer,
+        nullable=True,
+    )
+
+    is_read = db.Column(
+        db.Boolean,
+        default=False,
+        nullable=False,
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+    )
+
+    recipient = db.relationship(
+        "User",
+        foreign_keys=[recipient_id],
+        back_populates="notifications_received",
+    )
+
+    sender = db.relationship(
+        "User",
+        foreign_keys=[sender_id],
+        back_populates="notifications_sent",
+    )
+
+    def __repr__(self):
+        return (
+            f"<Notification "
+            f"id={self.id} "
+            f"type={self.type} "
+            f"recipient_id={self.recipient_id} "
+            f"sender_id={self.sender_id}>"
+        )
 
 
 class Cherish(db.Model):

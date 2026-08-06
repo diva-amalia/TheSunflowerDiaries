@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from pathlib import Path
 from uuid import uuid4
 
@@ -15,7 +16,7 @@ from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
 
 from app.extensions import db
-from app.models import Follow, Note, Poem, User
+from app.models import Follow, Note, Notification, Poem, User
 
 
 profile = Blueprint(
@@ -111,6 +112,53 @@ def _get_cherishes_received_count(user_id):
         total_cherishes += len(note.cherishes)
 
     return total_cherishes
+
+
+def _format_time_ago(created_at):
+    now = datetime.utcnow()
+    delta = now - created_at
+    seconds = int(delta.total_seconds())
+
+    if seconds < 60:
+        return "just now"
+
+    minutes = seconds // 60
+    if minutes < 60:
+        return f"{minutes} minute{'s' if minutes != 1 else ''} ago"
+
+    hours = minutes // 60
+    if hours < 24:
+        return f"{hours} hour{'s' if hours != 1 else ''} ago"
+
+    days = hours // 24
+    return f"{days} day{'s' if days != 1 else ''} ago"
+
+
+@profile.route("/notifications")
+@login_required
+def notifications():
+
+    notifications = (
+        Notification.query
+        .filter_by(recipient_id=current_user.id)
+        .order_by(Notification.created_at.desc())
+        .all()
+    )
+
+    for notification in notifications:
+        notification.was_unread = not notification.is_read
+
+        if not notification.is_read:
+            notification.is_read = True
+
+        notification.time_ago = _format_time_ago(notification.created_at)
+
+    db.session.commit()
+
+    return render_template(
+        "profile/notifications.html",
+        notifications=notifications,
+    )
 
 
 # ==========================
@@ -305,71 +353,6 @@ def edit_profile():
 
 
 
-# ==========================
-# PUBLIC PROFILE
-# ==========================
-
-@profile.route("/u/<string:username>")
-@login_required
-def public_profile(username):
-
-    user = User.query.filter_by(
-        username=username,
-    ).first_or_404()
-
-    poems = (
-        Poem.query.filter_by(
-            user_id=user.id,
-            is_public=True,
-        ).all()
-    )
-
-    notes = (
-        Note.query.filter_by(
-            user_id=user.id,
-            is_public=True,
-        ).all()
-    )
-
-    blooms = sorted(
-        poems + notes,
-        key=lambda bloom: bloom.created_at,
-        reverse=True,
-    )
-
-    for bloom in blooms:
-        bloom.is_cherished = any(
-            cherish.user_id == current_user.id
-            for cherish in bloom.cherishes
-        )
-
-    followers_count, following_count = _get_follow_counts(user.id)
-    cherish_count = _get_cherishes_received_count(user.id)
-    is_following = Follow.query.filter_by(
-        follower_id=current_user.id,
-        following_id=user.id,
-    ).first() is not None
-
-    stats = {
-        "public_poems": len(poems),
-        "public_notes": len(notes),
-        "followers": followers_count,
-        "following": following_count,
-        "cherishes_received": cherish_count,
-    }
-
-    return render_template(
-        "profile/public_profile.html",
-        user=user,
-        blooms=blooms,
-        stats=stats,
-        followers_count=followers_count,
-        following_count=following_count,
-        cherish_count=cherish_count,
-        is_following=is_following,
-    )
-
-
 @profile.route("/follow/<int:user_id>", methods=["POST"])
 @login_required
 def follow_user(user_id):
@@ -398,6 +381,15 @@ def follow_user(user_id):
         following_id=target_user.id,
     )
     db.session.add(follow)
+
+    notification = Notification(
+        recipient_id=target_user.id,
+        sender_id=current_user.id,
+        type="follow",
+        object_id=None,
+    )
+    db.session.add(notification)
+
     db.session.commit()
 
     flash("🌻 You are now following this user.", "success")
@@ -428,3 +420,4 @@ def unfollow_user(user_id):
 
     flash("🌻 You have unfollowed this user.", "success")
     return redirect(url_for("profile.public_profile", username=target_user.username))
+    

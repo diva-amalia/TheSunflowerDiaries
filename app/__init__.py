@@ -6,7 +6,8 @@ from sqlalchemy import inspect, text
 from config import Config
 
 from app.extensions import db, login_manager
-from app.models import Note, User
+from app.models import Note, User, Notification
+from flask_login import current_user
 
 from app.main.routes import main
 from app.auth.routes import auth
@@ -14,6 +15,7 @@ from app.garden.routes import garden
 from app.note.routes import note
 from app.poem.routes import poem
 from app.profile.routes import profile
+import app.profile.public_routes
 from app.explore import explore
 from app.cherish import cherish
 
@@ -67,7 +69,20 @@ def create_app():
     app.register_blueprint(profile)
     app.register_blueprint(explore)
     app.register_blueprint(cherish)
-    
+
+    @app.context_processor
+    def inject_unread_notifications():
+        unread_count = 0
+
+        if current_user.is_authenticated:
+            unread_count = Notification.query.filter_by(
+                recipient_id=current_user.id,
+                is_read=False,
+            ).count()
+
+        return {
+            "unread_notifications_count": unread_count,
+        }
 
     # ==========================
     # CREATE DATABASE

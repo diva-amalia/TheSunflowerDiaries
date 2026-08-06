@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications • The Sunflower Diaries</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/botanical.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/profile.css') }}">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<main class="container">
+
+    <div class="card profile-card">
+
+        <div class="header-row">
+
+            <a href="{{ url_for('profile.index') }}"
+               class="back-link">
+
+                ← Back to Profile
+
+            </a>
+
+            <h2 class="page-title">
+
+                Notifications
+
+            </h2>
+
+        </div>
+
+        <div class="profile-section">
+
+            {% if notifications %}
+
+                <div class="notifications-list">
+
+                    {% for notification in notifications %}
+
+                        <div class="notification-card {% if notification.was_unread %}notification-unread{% endif %}">
+
+                            <div class="notification-avatar">
+
+                                <img
+                                    src="{{ url_for('static', filename=notification.sender.avatar) if notification.sender.avatar else url_for('static', filename='images/smallbee.jfif') }}"
+                                    alt="{{ notification.sender.username }}">
+
+                            </div>
+
+                            <div class="notification-content">
+
+                                <p class="notification-message">
+                                    {% if notification.type == 'follow' %}
+                                        🌻 <strong>@{{ notification.sender.username }}</strong> started following you.
+                                    {% else %}
+                                        🌻 You have a new notification.
+                                    {% endif %}
+                                </p>
+
+                                <p class="notification-time">
+                                    {{ notification.time_ago }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="empty-state">
+                    You have no notifications yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

@@ -112,23 +112,42 @@ class="edit-bio">
 
 <div class="follow-stats">
 
-<span>
+    <strong>{{ followers_count }}</strong>
 
-<strong>{{ stats.followers }}</strong>
+    <a href="{{ url_for(
+        'profile.followers',
+        username=user.username
+    ) }}"
+    class="stat-link">
 
-Followers
+        Followers
 
-</span>
+    </a>
 
-<span>•</span>
+    <span>•</span>
 
-<span>
+    <strong>{{ following_count }}</strong>
 
-<strong>{{ stats.following }}</strong>
+    <a href="{{ url_for(
+        'profile.following',
+        username=user.username
+    ) }}"
+    class="stat-link">
 
-Following
+        Following
 
-</span>
+    </a>
+
+</div>
+
+<div class="notification-link-row">
+
+    <a href="{{ url_for('profile.notifications') }}" class="notification-link">
+        🔔
+        {% if unread_notifications_count > 0 %}
+            <span class="notification-badge">{{ unread_notifications_count }}</span>
+        {% endif %}
+    </a>
 
 </div>
 
@@ -293,7 +312,11 @@ Following
 </div>
 
 </div>
-
+<form action="{{ url_for('auth.logout') }}" method="POST">
+    <button type="submit" class="logout-btn">
+        🚪 Log Out
+    </button>
+</form>
 </section>
 
 <!-- ==========================================

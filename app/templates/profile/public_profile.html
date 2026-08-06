@@ -95,25 +95,34 @@ Joined {{ user.created_at.strftime("%B %Y") }}
 
 <div class="follow-stats">
 
-<span>
+    <strong>{{ followers_count }}</strong>
 
-<strong>{{ followers_count }}</strong>
+    <a href="{{ url_for(
+        'profile.followers',
+        username=user.username
+    ) }}"
+    class="stat-link">
 
-Followers
+        Followers
 
-</span>
+    </a>
 
-<span>•</span>
+    <span>•</span>
 
-<span>
+    <strong>{{ following_count }}</strong>
 
-<strong>{{ following_count }}</strong>
+    <a href="{{ url_for(
+        'profile.following',
+        username=user.username
+    ) }}"
+    class="stat-link">
 
-Following
+        Following
 
-</span>
+    </a>
 
 </div>
+
 
 <div class="profile-action">
 

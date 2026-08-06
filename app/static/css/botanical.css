@@ -438,3 +438,39 @@ select{
     }
 
 }
+
+.community-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.community-avatar{
+
+    width:30px;
+
+    height:30px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:1.5px solid rgba(212,175,55,.22);
+
+    box-shadow:0 2px 6px rgba(212,175,55,.12);
+
+    transition:.2s;
+
+    flex-shrink:0;
+
+}
+
+.community-avatar:hover{
+
+    transform:scale(1.05);
+
+}

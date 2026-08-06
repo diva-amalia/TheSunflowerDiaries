@@ -22,7 +22,7 @@
             </p>
             <p class="poem-date">{{ poem.created_at.strftime('%B %d, %Y') }}</p>
             <div class="poem-content">
-                {{ poem.content | replace('\n', '<br>') | safe }}
+                {{ poem.content }}
             </div>
             <div class="poem-detail-actions">
 

@@ -149,23 +149,36 @@
          USERNAME & DATE
     =========================== -->
 
-    <div class="poem-card-header">
+<div class="poem-card-header">
 
-        <div>
+    <div class="community-user">
 
-            <a href="{{ url_for(
-                'profile.public_profile',
-                username=item.author.username
-            ) }}"
-            class="feed-username">
+        <a href="{{ url_for(
+            'profile.public_profile',
+            username=item.author.username
+        ) }}">
 
-                @{{ item.author.username }}
+            <img
+                src="{{ url_for('static',
+                filename='images/' ~ (item.author.avatar if item.author.avatar else 'smallbee.jfif')) }}"
+                class="community-avatar"
+                alt="{{ item.author.display_name }}">
 
-            </a>
+        </a>
 
-        </div>
+        <a href="{{ url_for(
+            'profile.public_profile',
+            username=item.author.username
+        ) }}"
+        class="feed-username">
 
-        <time
+            @{{ item.author.username }}
+
+        </a>
+
+    </div>
+    
+    <time
          class="community-date"
          datetime="{{ item.created_at.isoformat() }}">
 
